@@ -1,0 +1,35 @@
+<div class="inputDiv">
+  <div class="input-container">
+    <input
+      required=""
+      placeholder="Enter your word"
+      type="text"
+      [(ngModel)]="word"
+      maxlength="5"
+      (input)="validateInput($event)"
+    />
+    <button
+      class="invite-btn"
+      [disabled]="word.length !== 5 || !isValidWord()"
+      type="button"
+      (click)="onSubmit()"
+      [style.backgroundColor]="
+        word.length === 5 && isValidWord() ? '#0B4719' : '#D3D3D3'
+      "
+    >
+      submit
+    </button>
+  </div>
+</div>
+
+<div *ngFor="let grid of grids; let gridIndex = index" class="grid">
+  <button
+    *ngFor="let button of [0, 1, 2, 3, 4]; let buttonIndex = index"
+    class="letter"
+    [style.background]="buttonColors[gridIndex][buttonIndex]"
+    (click)="changeColor(gridIndex, buttonIndex)"
+  >
+    <span>{{ buttonLetters[gridIndex][buttonIndex] }}</span>
+  </button>
+  <button class="plus" (click)="addGrid()">+</button>
+</div>
