@@ -1,0 +1,57 @@
+.main_container {
+    background-color: blue;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    /* justify-content: space-between; */
+    flex-direction: column;
+}
+
+.navbar {
+    width: 100%;
+    height: 8%;
+    background-color: burlywood;
+    margin-bottom: 10px;
+    margin-top:0;
+}
+
+.game_name_container {
+    margin-bottom: 5px;
+    margin-top: 10px;
+    height: 10%;
+    width: 15%;
+    top: 15%;
+    background-color: bisque;
+    text-align: center;
+    color: brown;
+}
+
+
+.game_container {
+    margin-top: 0px;
+    height: 70%;
+    width: 50%;
+    margin-bottom: 10px;
+    border: 5px solid navy;
+    border-bottom-width: 10px;
+    border-bottom-color: #009595;
+    border-top-width: 10px;
+    border-top-color: #009595;
+    border-left-width: 10px;
+    border-left-color: #005C5C;
+    border-right-width: 10px;
+    border-right-color: #005C5C;
+
+    background-color: blueviolet;
+}
+
+#button_submit_answer {
+    height: 5%;
+    width: 8%;
+    text-align: center;
+    background-color: #005C5C;
+    color: aliceblue;
+    border: 5px solid;
+    border-color: #009595;
+}
