@@ -3,10 +3,12 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { VersusPageComponent } from './versus-page/versus-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    VersusPageComponent
   ],
   imports: [
     BrowserModule,
