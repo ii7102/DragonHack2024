@@ -1,16 +1,30 @@
 .main_container {
+    background-color:rgb(255, 225, 186);
+    width: 100%;
+    height: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+    /* align-items: center;
+    display: flex; */
+}
+
+.main-container {
     background-color: blue;
     width: 100%;
     height: 100%;
-    align-items: center;
-    display: flex;
+    margin: 0;
+    padding: 0;
+    /* align-items: center;
+    display: flex; */
+    /* justify-content: space-between; */
+    /* flex-direction: column; */
 }
 
 #button_show_result {
-    height: 4%;
-    width: 7%;
-    margin-left: 34%;
-    margin-top: 10px;
+    height: 65%;
+    width: 15%;
+    margin-left: 42.5%;
+    margin-top: 5px;
     margin-bottom: 10px;
     text-align: center;
     background-color: #005C5C;
@@ -20,9 +34,10 @@
 }
 
 #focus_button {
-    height: 5%;
-    width: 11%;
-    margin-left: 25px;
+    height: 65%;
+    width: 25%;
+    margin-top: 5px;
+    margin-left: 13%;
     font-size:medium ;
     background-color: darkred;
     color:red;
@@ -30,26 +45,31 @@
     border-color: firebrick;
 }
 
-.body {
-    background-color:bisque;
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* .body {
+    background-color:rgb(255, 225, 186);
     height: 1080px;
     margin-top: 0%;
     margin-bottom:0%;
-    /* padding-left: 10px;
-    padding-right: 10px; */
+    
     padding-bottom: 10px;
-}
+} */
 
 .navbar {
     width: 100%;
     height: 6%;
     background-color: burlywood;
     margin-bottom: 25px;
+    margin-top: 0;
 }
 
 .wordle_grid_container {
-    width: 40%;
-    height: 35%;
+    width: 90%;
+    height: 45%;
     background-color:coral;
     margin-left: 15px;
     margin-right: 15px;
@@ -65,11 +85,73 @@
 }
 
 .result_text_container {
-    width: 40.5%;
-    height: 25%;
+    width: 91%;
+    height: 33%;
     background-color: coral;
     border: 6px solid #005C5C;
     border-radius: 15px;
     margin-left: 15px;
     margin-right: 15px;
+}
+
+/* .container2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.container2-1 {
+    height: 100%;
+    width: 50%;
+}
+
+.container2-2 {
+    height: 100%;
+    width: 50%;
+    /* margin-left: 50%; 
+} */
+
+.container2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row; /* Change to row */
+}
+
+.button-container {
+    display: flex;
+    height: 7%;
+    justify-content: flex-start;
+}
+
+/* .button-container button {
+    margin-right: 10px;
+} */
+
+.container2-1 {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+
+.container2-2 {
+    flex: 1; /* Take up remaining space */
+}
+
+.subway_surfers_container {
+    
+    height: 86%;
+    width: 90%;
+    margin-left: 1%;
+    border: 5px solid navy;
+    border-bottom-width: 10px;
+    border-bottom-color: #009595;
+    border-top-width: 10px;
+    border-top-color: #009595;
+    border-left-width: 10px;
+    border-left-color: #005C5C;
+    border-right-width: 10px;
+    border-right-color: #005C5C;
 }
