@@ -9,6 +9,7 @@ import { VersusPageComponent } from './components/versus-page/versus-page.compon
 import { ResultBoxComponent } from './components/result-box/result-box.component';
 import { HelperPageComponent } from './components/helper-page/helper-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { WordleComponent } from './components/wordle/wordle.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     VersusPageComponent,
     ResultBoxComponent,
     HelperPageComponent,
-    NavbarComponent
+    NavbarComponent,
+    WordleComponent
   ],
   imports: [
     BrowserModule,
