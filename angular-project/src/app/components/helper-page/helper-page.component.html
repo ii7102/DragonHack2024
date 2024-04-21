@@ -1,30 +1,19 @@
 <div class="main_container">
-    <!-- <div class="body"> -->
-        <div class="navbar">
-            <h1>--------------NAVBAR--------------</h1>
-        </div>
-        <div class="container2">
-            <div class="container2-1">
-                <div class="wordle_grid_container">
+  <!-- <div class="body"> -->
+  <app-navbar class="nav"></app-navbar>
+  <div class="container2">
+    <div class="container2-1">
+      <app-insert-word class="wordle_grid_container"></app-insert-word>
+      <div class="button-container">
+        <button class="button2">Assist me</button>
+        <button class="button2">Can't focus?</button>
+      </div>
 
-                </div>
-
-                <div class="button-container">
-                    <button id="button_show_result" onclick="showResult">OK</button>
-                    <button id="focus_button" onClick="focusOn">Need more focus?</button>
-                </div>
-
-                <div class="result_text_container">
-
-                </div>
-
-            </div>
-            <div class="container2-2">
-
-                <div class="subway_surfers_container">
-                
-                </div>
-            </div>
-        </div>
-    <!-- </div> -->
+      <div class="result_text_container"></div>
+    </div>
+    <div class="container2-2">
+      <div class="subway_surfers_container"></div>
+    </div>
+  </div>
+  <!-- </div> -->
 </div>

@@ -4,9 +4,6 @@
 
 .navbar {
     background-color: #0B4719;
-    position: fixed;
-    top: 0;
-    left: 0;
     height: 70px;
     width: 100%;
     display: flex;
@@ -98,3 +95,20 @@
     color: white;
     margin-left: 10px;
 }
+
+.image {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    background-image: url('../../../assets/logo.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .left-side{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

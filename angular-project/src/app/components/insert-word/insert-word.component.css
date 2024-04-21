@@ -124,7 +124,7 @@ div{
     width: 100%;
     min-width: 200px;
     max-width: 250px;
-    background-color: #fff;
+    background-color: transparent;
     border-radius: 8px;
     box-shadow: 20px 20px 30px rgba(0, 0, 0, .05);
   }
@@ -133,7 +133,7 @@ div{
     height: 100%;
     width: 100%;
     border-radius: 8px;
-    border: 1px solid  rgb(176 190 197);
+    border: 2px solid  rgb(176 190 197);
     background-color: transparent;
     padding: 0.4rem 70px 0.3rem 0.75rem;
     font-size: 0.95rem;

@@ -43,12 +43,17 @@ export class InsertWordComponent {
     }
   }
 
-  onSubmit() {    
-    // Fill the first five empty buttons with the first five letters from the input
+  onSubmit() {
+    let index = this.buttonLetters.findIndex((letters) => letters.includes(''));
+    if (index === -1) {
+      index = this.buttonLetters.length;
+      this.addGrid();
+    }
     for (let i = 0; i < this.word.length && i < 5; i++) {
-      this.buttonLetters[this.grids.length - 1][i] = this.word[i];
-      }
+      this.buttonLetters[index][i] = this.word[i];
+    }
   }
+  
   
   validateInput(event: any) {
     const input = event.target.value;
