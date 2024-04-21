@@ -14,7 +14,7 @@
     width: 100%;
     height: 100%;
     display: flex;
-    flex-direction: row; /* Change to row */
+    flex-direction: row;
 }
 
 .button-container {
@@ -26,14 +26,14 @@
 }
 
 .container2-1 {
-    flex: 1; /* Take up remaining space */
+    flex: 1;
     display: flex;
     flex-direction: column;
  
 }
 
 .container2-2 {
-    flex: 1; /* Take up remaining space */
+    flex: 1;
 }
 
 .subway_surfers_container {
@@ -44,7 +44,6 @@
 }
 
 
-/* SARA CSS */
 .button2 {
     height: 55%;
     width: 26%;
