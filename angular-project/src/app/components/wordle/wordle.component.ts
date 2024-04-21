@@ -2,15 +2,14 @@ import {Component, ElementRef, HostListener, QueryList, ViewChild, ViewChildren}
 
 import {WORDS} from './words';
 
-// Lenght of the word.
+// Lenght of the word
 const WORD_LENGTH = 5;
 
-// Number of tries.
+// Number of tries
 const NUM_TRIES = 6;
 
-// Letter map.
+// Letter map
 const LETTERS = (() => {
-  // letter -> true. Easier to check.
   const ret: {[key: string]: boolean} = {};
   for (let charCode = 97; charCode < 97 + 26; charCode++) {
     ret[String.fromCharCode(charCode)] = true;
@@ -18,25 +17,25 @@ const LETTERS = (() => {
   return ret;
 })();
 
-// One try.
+//One try
 interface Try {
   letters: Letter[];
 }
 
-// One letter in a try.
+//One letter in a try.
 interface Letter {
   text: string;
   state: LetterState;
 }
 
 enum LetterState {
-  // you know.
+
   WRONG,
-  // letter in word but position is wrong.
+  //There is a letter but not on correct position
   PARTIAL_MATCH,
-  // letter and position are all correct.
+  //Whole word is a mach
   FULL_MATCH,
-  // before the current try is submitted.
+  //Before the try is submitted
   PENDING,
 }
 
@@ -53,6 +52,8 @@ export class WordleComponent {
 
   selectedWord!: string;
   selectedMode!: string;
+
+  //Every player starts with 0 points
   player1Points: number = 0;
   player2Points: number = 0;
 
@@ -60,6 +61,7 @@ export class WordleComponent {
     this.selectedMode = player;
   }
 
+  //calculating the total point of a player
   calculatePoints(points: number) {
     if (this.selectedMode === 'player1') {
       this.player1Points += points;
@@ -68,59 +70,54 @@ export class WordleComponent {
     }
   }
   
-  // Stores all tries.
-  // One try is one row in the UI.
+  //the tries are stored
   tries: Try[] = [];
 
-  // This is to make LetterState enum accessible in html template.
+  //make LetterState accesible in html
   readonly LetterState = LetterState;
 
-  // Keyboard rows.
+  //these are the keybord rows
   readonly keyboardRows = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
     ['Enter', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'Backspace'],
   ];
 
-  // Stores the state for the keyboard key indexed by keys.
+  //State of keybord by index
   curLetterStates: {[key: string]: LetterState} = {};
 
-  // Message shown in the message panel.
+  //Final message
   infoMsg = '';
-
-  // Controls info message's fading-out animation.
   fadeOutInfoMessage = false;
-
   showShareDialogContainer = false;
   showShareDialog = false;
 
-  // Tracks the current letter index.
+  //Current letter index
   private curLetterIndex = 0;
 
-  // Tracks the number of submitted tries.
+  //Number of submitted tries
   private numSubmittedTries = 0;
 
-  // Store the target word.
+  //The target word for guessing
   private targetWord = '';
 
-  // Won or not.
+  //Final situation, win of loose
   private won = false;
 
-  // Stores the count for each letter from the target word.
-  //
-  // For example, if the target word is "happy", then this map will look like:
-  //
-  // { 'h':1, 'a': 1, 'p': 2, 'y': 1 }
+  //storing a counter for each letter
   private targetWordLetterCounts: {[letter: string]: number} = {};
 
+  
   constructor() {
+    //Getting the words with 5 letters
     this.wordsWithLengthFive = this.words.filter(word => word.length === 5);
+    //The first selected word is the first word in the array
     this.selectedWord = this.wordsWithLengthFive[0];
   }
 
 
   funkcija() {
-    // Populate initial state of "tries".
+    //Initial state of every call
     this.tries = [];
     this.curLetterStates = {};
     this.infoMsg = '';
@@ -142,13 +139,12 @@ export class WordleComponent {
     }
 
     this.targetWord=this.selectedWord.toLowerCase();
-    console.log(this.selectedWord)
+
+    //you can use this part for cheating (:
+    console.log('solution= ',this.selectedWord);
     
 
-    // Print it out so we can cheat!:)
-    console.log('target word: ', this.targetWord);
-
-    // Generate letter counts for target word.
+    //Counting letters of the target word
     for (const letter of this.targetWord) {
       const count = this.targetWordLetterCounts[letter];
       if (count == null) {
@@ -164,7 +160,6 @@ export class WordleComponent {
     this.handleClickKey(event.key);
   }
 
-  // Returns the classes for the given keyboard key based on its state.
   getKeyClass(key: string): string {
     const state = this.curLetterStates[key.toLowerCase()];
     switch (state) {
@@ -180,37 +175,30 @@ export class WordleComponent {
   }
 
   handleClickKey(key: string) {
-    // Don't process key down when user has won the game.
     if (this.won) {
       return;
     }
-
-    // If key is a letter, update the text in the corresponding letter object.
+    //if the pressed key is a letter display it in the corresponding box
     if (LETTERS[key.toLowerCase()]) {
-      // Only allow typing letters in the current try. Don't go over if the
-      // current try has not been submitted.
       if (this.curLetterIndex < (this.numSubmittedTries + 1) * WORD_LENGTH) {
         this.setLetter(key);
         this.curLetterIndex++;
       }
     }
-    // Handle delete.
     else if (key === 'Backspace') {
-      // Don't delete previous try.
+      //We dont delete the previous tries
       if (this.curLetterIndex > this.numSubmittedTries * WORD_LENGTH) {
         this.curLetterIndex--;
         this.setLetter('');
       }
-    }
-    // Submit the current try and check.
+    }//you check your try with pressing Enter
     else if (key === 'Enter') {
       this.checkCurrentTry();
     }
   }
 
   handleClickShare() {
-    // 🟩🟨⬜
-    // Copy results into clipboard.
+
     let clipboardContent = '';
     for (let i = 0; i < this.numSubmittedTries; i++) {
       for (let j = 0; j < WORD_LENGTH; j++) {
@@ -245,19 +233,16 @@ export class WordleComponent {
   }
 
   private async checkCurrentTry() {
-    // Check if user has typed all the letters.
     const curTry = this.tries[this.numSubmittedTries];
     if (curTry.letters.some(letter => letter.text === '')) {
       this.showInfoMessage('Not enough letters');
       return;
     }
 
-    // Check if the current try is a word in the list.
     const wordFromCurTry =
         curTry.letters.map(letter => letter.text).join('').toUpperCase();
     if (!WORDS.includes(wordFromCurTry)) {
       this.showInfoMessage('Not in word list');
-      // Shake the current row.
       const tryContainer =
           this.tryContainers.get(this.numSubmittedTries)?.nativeElement as
           HTMLElement;
@@ -268,12 +253,7 @@ export class WordleComponent {
       return;
     }
 
-    // Check if the current try matches the target word.
-
-    // Stores the check results.
-
-    // Clone the counts map. Need to use it in every check with the initial
-    // values.
+  
     const targetWordLetterCounts = {...this.targetWordLetterCounts};
     const states: LetterState[] = [];
     for (let i = 0; i < WORD_LENGTH; i++) {
@@ -281,12 +261,7 @@ export class WordleComponent {
       const curLetter = curTry.letters[i];
       const got = curLetter.text.toLowerCase();
       let state = LetterState.WRONG;
-      // Need to make sure only performs the check when the letter has not been
-      // checked before.
-      //
-      // For example, if the target word is "happy", then the first "a" user
-      // types should be checked, but the second "a" should not, because there
-      // is no more "a" left in the target word that has not been checked.
+      
       if (expected === got && targetWordLetterCounts[got] > 0) {
         targetWordLetterCounts[expected]--;
         state = LetterState.FULL_MATCH;
@@ -299,43 +274,28 @@ export class WordleComponent {
     }
     console.log(states);
 
-    // Animate.
-    // Again, there must be a more angular way to do this, but...
-
-    // Get the current try.
+   
     const tryContainer =
         this.tryContainers.get(this.numSubmittedTries)?.nativeElement as
         HTMLElement;
-    // Get the letter elements.
+   
     const letterEles = tryContainer.querySelectorAll('.letter-container');
     for (let i = 0; i < letterEles.length; i++) {
-      // "Fold" the letter, apply the result (and update the style), then unfold
-      // it.
+      
       const curLetterEle = letterEles[i];
       curLetterEle.classList.add('fold');
-      // Wait for the fold animation to finish.
       await this.wait(180);
-      // Update state. This will also update styles.
       curTry.letters[i].state = states[i];
-      // Unfold.
       curLetterEle.classList.remove('fold');
       await this.wait(180);
     }
 
-    // Save to keyboard key states.
-    //
-    // Do this after the current try has been submitted and the animation above
-    // is done.
     for (let i = 0; i < WORD_LENGTH; i++) {
       const curLetter = curTry.letters[i];
       const got = curLetter.text.toLowerCase();
       const curStoredState = this.curLetterStates[got];
       const targetState = states[i];
-      // This allows override state with better result.
-      //
-      // For example, if "A" was partial match in previous try, and becomes full
-      // match in the current try, we update the key state to the full match
-      // (because its enum value is larger).
+  
       if (curStoredState == null || targetState > curStoredState) {
         this.curLetterStates[got] = targetState;
       }
@@ -343,12 +303,12 @@ export class WordleComponent {
 
     this.numSubmittedTries++;
 
-    // Check if all letters in the current try are correct.
+    // Check if all letters in the current try are correct
     if (states.every(state => state === LetterState.FULL_MATCH)) {
       this.showInfoMessage('NICE!');
       this.won = true;
       this.calculatePoints(7-this.numSubmittedTries);
-      // Bounce animation.
+      // Animation
       for (let i = 0; i < letterEles.length; i++) {
         const curLetterEle = letterEles[i];
         curLetterEle.classList.add('bounce');
@@ -358,12 +318,9 @@ export class WordleComponent {
       return;
     }
 
-    // Running out of tries. Show correct answer.
-    //
-    // If you can hear, my heater is on.. sorry about that!
+   
     if (this.numSubmittedTries === NUM_TRIES) {
-      // Don't hide it.
-
+   
       this.showInfoMessage(this.targetWord.toUpperCase(), false);
       this.showShare();
       this.calculatePoints(0);
@@ -374,11 +331,8 @@ export class WordleComponent {
   private showInfoMessage(msg: string, hide = true) {
     this.infoMsg = msg;
     if (hide) {
-      // Hide after 2s.
       setTimeout(() => {
         this.fadeOutInfoMessage = true;
-        // Reset when animation is done.
-        // Sorry, little bit hacky here.
         setTimeout(() => {
           this.infoMsg = '';
           this.fadeOutInfoMessage = false;
@@ -398,9 +352,7 @@ export class WordleComponent {
   private showShare() {
     setTimeout(() => {
       this.showShareDialogContainer = true;
-      // Wait a tick till dialog container is displayed.
       setTimeout(() => {
-        // Slide in the share dialog.
         this.showShareDialog = true;
       });
     }, 1500);

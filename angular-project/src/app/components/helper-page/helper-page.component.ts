@@ -34,7 +34,7 @@ export class HelperPageComponent {
       const video = subwayContainer.querySelector('video');
       if (video) {
         video.pause();
-        // video.stop();
+       
         this.isVideoPlaying = false;
       }
 

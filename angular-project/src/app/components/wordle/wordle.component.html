@@ -1,6 +1,6 @@
 <div class="container">
 
-	
+<!-- Part where you choose player	 -->
 	<div class="container1">
 	<div class="title-container">
 		<div class="title">Choose player's turn</div>
@@ -14,7 +14,7 @@
 	</div>
 	
 
-	
+<!-- 	The oponent of the player is choosing the target for guessing -->
 	<div class="title-container">
 		<div class="title">Give the oponent a target</div>
 	</div>
@@ -28,7 +28,7 @@
 		</div>
 	</div>
 
-
+<!-- Displaying total results from the first game to the last -->
 	<section class="first-column">
 		<div class="title-container">
 		  <div class="title">Latest Score</div>
@@ -50,7 +50,7 @@
 
 
 
-
+<!-- implementation of the wordle game -->
 
 <div class="container2">
 	<div class="title-container">
@@ -58,7 +58,7 @@
 		
 
 	</div>
-
+<!-- Part with boxes for guessing the word -->
 	<div class="main">
 		<div class="try-container" *ngFor="let try of tries" #tryContainer>
 			<div class="letter-container" *ngFor="let letter of try.letters"
@@ -71,7 +71,7 @@
 		</div>
 	</div>
 
-
+<!-- Keyboard in case you dont have a physical one -->
 	<div class="keyboard-container">
 		<div [class]="['row' + i, 'row'].join(' ')"
 		    *ngFor="let row of keyboardRows; let i = index">
@@ -88,6 +88,7 @@
 		</div>
 	</div>
 
+<!-- Nice comment if you win, the correct answer if you lose	 -->
 	<div class="info-msg"
 	    [class.show]="infoMsg !== ''"
 	    [class.fade-out]="fadeOutInfoMessage">

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { InsertWordComponent } from './components/insert-word/insert-word.component';
-import { VersusPageComponent } from './components/versus-page/versus-page.component';
 import { ResultBoxComponent } from './components/result-box/result-box.component';
 import { HelperPageComponent } from './components/helper-page/helper-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -17,7 +16,6 @@ import { AppRoutingModule } from './app.routes'
   declarations: [
     AppComponent,
     InsertWordComponent,
-    VersusPageComponent,
     ResultBoxComponent,
     HelperPageComponent,
     NavbarComponent,

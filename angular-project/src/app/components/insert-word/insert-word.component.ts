@@ -84,8 +84,7 @@ export class InsertWordComponent {
       buttonsInGrid.forEach((button, buttonIndex) => { // Here you get the index of the button in the grid
         const buttonText = button.nativeElement.textContent.trim();
         const buttonColor = button.nativeElement.style.background;
-        // console.log(buttonColor);
-        // console.log('Button index in grid:', buttonIndex); // This line logs the index of the button in the current grid
+        
         if (buttonColor === 'rgb(211, 211, 211)' && !this.yellow.includes(buttonText) && !this.grey.includes(buttonText)) {
           this.grey.push(buttonText.toLowerCase());
         } else if (buttonColor ===  'rgb(105, 174, 69)' && !this.yellow.includes(buttonText) && !this.green.includes(buttonText)) {

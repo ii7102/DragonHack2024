@@ -184,21 +184,6 @@ div{
     background-color: gray;
     opacity: 0.5;
   }
-/* 
-  .click {
-    width: fit-content;
-    min-width: 100px;
-    height: 45px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 2.5px solid #E0E1E4;
-    box-shadow: 0px 0px 20px -20px;
-    cursor: pointer;
-    background-color: white;
-    transition: all 0.2s ease-in-out 0ms;
-    user-select: none;
-    font-family: 'Poppins', sans-serif;
-  } */
 
 /* assist me */
   .click {
@@ -273,12 +258,10 @@ div{
   }
 
   .button-container {
-    /* height: 15%; */
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     margin-top: 50px;
-    /* margin-right: 10px; */
 }
   
 
