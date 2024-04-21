@@ -12,11 +12,16 @@ export class HelperPageComponent {
 
   playVideo() {
     const focusButton = this.elementRef.nativeElement.querySelector('#focus_button');
+    const subwayContainer = this.elementRef.nativeElement.querySelector('.subway_surfers_container');
 
-    if (focusButton.innerText === 'Need more focus?') {
+    if (focusButton.innerText === "Can't focus?") {
+      // Show the container
+      subwayContainer.style.display = 'block';
+
       // Play the video
-      const video = this.elementRef.nativeElement.querySelector('.subway_surfers_container video');
+      const video = subwayContainer.querySelector('video');
       if (video) {
+        video.currentTime = 0;
         video.play();
         this.isVideoPlaying = true;
       }
@@ -25,14 +30,18 @@ export class HelperPageComponent {
       focusButton.innerText = 'STOP';
     } else {
       // Stop the video
-      const video = this.elementRef.nativeElement.querySelector('.subway_surfers_container video');
+      const video = subwayContainer.querySelector('video');
       if (video) {
         video.pause();
+        // video.stop();
         this.isVideoPlaying = false;
       }
 
+      // Hide the container
+      subwayContainer.style.display = 'none';
+
       // Change button text to "Need more focus?"
-      focusButton.innerText = 'Need more focus?';
+      focusButton.innerText = "Can't focus?";
     }
   }
 }
