@@ -7,31 +7,30 @@ import axios from 'axios';
   styleUrls: ['./insert-word.component.css']
 })
 export class InsertWordComponent {
-  grids: number[] = [1]; // Initialize the grids array with one element
-  buttonColors: string[][] = [['#D3D3D3', '#D3D3D3', '#D3D3D3', '#D3D3D3', '#D3D3D3']]; // Initialize the button color array with grey
+  grids: number[] = [1]; // Initializing the grids array with one element
+  buttonColors: string[][] = [['#D3D3D3', '#D3D3D3', '#D3D3D3', '#D3D3D3', '#D3D3D3']]; // Initializing the button color array with grey
   word: string = '';
-  buttonLetters: string[][] = [['', '', '', '', '']]; // Initialize the button letters array with empty strings
+  buttonLetters: string[][] = [['', '', '', '', '']]; // Initializing the button letters array with empty strings
   elements: number=1
   questionMarks = 0
   charCountArray: number[] = []
   words: string[] = []
 
-  @ViewChildren('letterButton') letterButtons!: QueryList<any>; // Add ! to indicate that it will be initialized later
+  @ViewChildren('letterButton') letterButtons!: QueryList<any>; // ! to indicate that it will be initialized later
   grey: string[]=[];
   yellow: string[]=[]
   green:string[]=['?', '?', '?', '?', '?']
   boolYellow: boolean[]=[]
 
-  constructor() { } // Added constructor
+  constructor() { } 
 
+  //Generate a new grid of 5 buttons
   addGrid() {
-    // Add a new element to the grids array
     if(this.elements<5){
       this.grids.push(1);
       this.elements+=1
     }
   
-    // Add a new array of colors to the buttonColors array with grey color
     this.buttonColors.push(['#D3D3D3', '#D3D3D3', '#D3D3D3', '#D3D3D3', '#D3D3D3']);
     
     // Add a new array of button letters with empty strings
@@ -39,6 +38,7 @@ export class InsertWordComponent {
   }
   
 
+  //Changing the buttoncolor on click 
   changeColor(gridIndex: number, buttonIndex: number) {
     switch(this.buttonColors[gridIndex][buttonIndex]) {
       case '#D3D3D3': // If the color is grey, change it to green
@@ -55,27 +55,44 @@ export class InsertWordComponent {
     }
   }
 
+  //onSubmit add the letters to the buttons
   onSubmit() {
     let index = this.buttonLetters.findIndex((letters) => letters.includes(''));
     if (index === -1) {
       index = this.buttonLetters.length;
-      this.addGrid();
+      //this.addGrid();
     }
     for (let i = 0; i < this.word.length && i < 5; i++) {
       this.buttonLetters[index][i] = this.word[i];
     }
   }
   
+ 
   validateInput(event: any) {
     const input = event.target.value;
     this.word = input.replace(/[^a-zA-Z]/g, '').toUpperCase().slice(0, 5);
   }
-
+  //Only get words from the input
   isValidWord() {
     return /^[a-zA-Z]+$/.test(this.word);
   }
 
+  //for the function "assist me", create arrays of the valid letters with correct and incorrect positioning, and non-valid letters
   onClick() {
+    let allButtonsHaveText = true; 
+
+  this.grids.forEach((_, gridIndex) => {
+    const buttonsInGrid = this.buttonLetters[gridIndex];
+    buttonsInGrid.forEach(buttonText => {
+      if (!buttonText) { 
+        allButtonsHaveText = false;
+        return;
+      }
+    });
+  });
+
+  if (allButtonsHaveText) {
+ 
     this.yellow = []
     this.grey = []
     this.grids.forEach((_, gridIndex) => {
@@ -122,10 +139,12 @@ export class InsertWordComponent {
     labelElement.textContent = removedElement[0].toUpperCase();
     });
   }
+  }
 
   notValid() {
     const labelElement = document.querySelector('.input-label') as HTMLLabelElement;
     let removedElement = this.words.splice(this.selectWord(this.words),1)
+    if(removedElement.length>0)
     labelElement.textContent = removedElement[0].toUpperCase();
   }
   
