@@ -14,6 +14,7 @@ export class InsertWordComponent {
   elements: number=1
   questionMarks = 0
   charCountArray: number[] = []
+  words: string[] = []
 
   @ViewChildren('letterButton') letterButtons!: QueryList<any>; // Add ! to indicate that it will be initialized later
   grey: string[]=[];
@@ -107,9 +108,6 @@ export class InsertWordComponent {
 
     this.charCountArray = Array(26).fill(0);
     this.questionMarks = 0
-    console.log(this.grey)
-    console.log(this.yellow)
-    console.log(this.green)
     this.callAlgorithm(this.grey, this.yellow, this.green.join("")).then(words => {
       words.forEach(str => {
         const charSet: Set<string> = new Set();
@@ -120,13 +118,20 @@ export class InsertWordComponent {
             }
         }
     });
-      console.log(words[this.selectWord(words)])
+    const labelElement = document.querySelector('.input-label') as HTMLLabelElement;
+    let removedElement = words.splice(this.selectWord(words),1)
+    labelElement.textContent = removedElement[0].toUpperCase();
     });
+  }
+
+  notValid() {
+    const labelElement = document.querySelector('.input-label') as HTMLLabelElement;
+    let removedElement = this.words.splice(this.selectWord(this.words),1)
+    labelElement.textContent = removedElement[0].toUpperCase();
   }
   
   async callAlgorithm(lettersOUT: string[], lettersIN: string[], regex: string): Promise<string[]> {
     try {
-      const words: string[] = []
       for(let i = 0; i < 5; i++)
           if(this.charAtStringIsEqualTo(regex,i,"?")) this.questionMarks++
       if(this.questionMarks == 4) {
@@ -140,7 +145,7 @@ export class InsertWordComponent {
                   regex = this.secondCharChangedOfString(regex,String.fromCharCode(charCode))
                 const response = await axios.get(`https://api.datamuse.com/words?sp=${regex}&max=1000`);
                 const responseToArray = response.data.map((wordInfo: any) => wordInfo.word)
-                words.push(...this.filter(responseToArray,lettersOUT,lettersIN,regex))
+                this.words.push(...this.filter(responseToArray,lettersOUT,lettersIN,regex))
               }
         if(firstQuestionMarkIndex === 0)
           regex = this.firstCharChangedOfString(regex,"?")
@@ -155,15 +160,15 @@ export class InsertWordComponent {
                 regex = this.secondCharChangedOfString(regex,String.fromCharCode(charCode2))
                 const response = await axios.get(`https://api.datamuse.com/words?sp=${regex}&max=1000`);
                 const responseToArray = response.data.map((wordInfo: any) => wordInfo.word)
-                words.push(...this.filter(responseToArray,lettersOUT,lettersIN,regex))
+                this.words.push(...this.filter(responseToArray,lettersOUT,lettersIN,regex))
               }
           }
       } else {
         const response = await axios.get(`https://api.datamuse.com/words?sp=${regex}&max=1000`);
         const responseToArray = response.data.map((wordInfo: any) => wordInfo.word)
-        words.push(...this.filter(responseToArray,lettersOUT,lettersIN,regex))
+        this.words.push(...this.filter(responseToArray,lettersOUT,lettersIN,regex))
       }
-      return words;
+      return this.words;
     }
     catch (error) {
       console.error('Error fetching words:', error);

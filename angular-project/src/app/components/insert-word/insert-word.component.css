@@ -304,9 +304,9 @@ div{
 .input-label {
   position: absolute;
   top: 0;
-  left: 0;
-  font-size: 16px;
-  color: rgba(204, 204, 204, 0);
+  left: 50px;
+  font-size: 30px;
+  color: rgba(0,0,0);
   pointer-events: none;
   transition: all 0.3s ease;
 }
