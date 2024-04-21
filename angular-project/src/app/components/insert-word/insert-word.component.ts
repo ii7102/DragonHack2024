@@ -22,7 +22,7 @@ export class InsertWordComponent {
 
   addGrid() {
     // Add a new element to the grids array
-    if(this.elements<4){
+    if(this.elements<5){
       this.grids.push(1);
       this.elements+=1
     }
