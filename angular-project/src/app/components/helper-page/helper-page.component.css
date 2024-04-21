@@ -19,10 +19,12 @@
 }
 
 .button-container {
+    /* height: 15%; */
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     margin-top: 50px;
+    /* margin-right: 10px; */
 }
 
 .container2-1 {
@@ -48,6 +50,8 @@
 
 /* SARA CSS */
 .button2 {
+    height: 55%;
+    width: 26%;
     margin: 20px;
     display: inline-block;
     transition: all 0.2s ease-in;
@@ -55,7 +59,7 @@
     overflow: hidden;
     z-index: 1;
     color: #0B4719;
-    padding: 0.7em 1.7em;
+    /* padding: 0.7em 1.7em; */
     cursor: pointer;
     font-size: 18px;
     border-radius: 0.5em;

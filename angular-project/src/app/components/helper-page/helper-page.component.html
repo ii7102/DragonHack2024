@@ -7,18 +7,26 @@
       <div class="button-container">
         <button class="button2"  >Assist me</button>
         <!-- gore: (click)="showResult()" -->
-        <button class="button2" id="focus_button"  (click)="playVideo()" >Can't focus?</button>
+        <!-- <button class="button2" id="focus_button"  (click)="playVideo()" >Can't focus?</button> -->
+        <!-- <button class="button2" id="podcast_boost" (click)="toggleAudio()">Podcast boost</button> -->
       </div>
+      <!-- <audio controls src="assets/RoganGoggins.mp3"></audio> -->
 
       <div class="result_text_container"></div>
     </div>
     <div class="container2-2">
+        <div class="button-container">
+            <button class="button2" id="focus_button"  (click)="playVideo()" >Can't focus?</button>
+            <button class="button2" id="podcast_boost" (click)="toggleAudio()">Podcast boost</button>
+            <audio controls src="assets/RoganGoggins.mp3"></audio>
+        </div>
         <div class="subway_surfers_container"> 
             <!-- #videoContainer gore -->
-            <video controls width="100%" height="100%">
+            <video loop  width="100%" height="100%">
                 <source src="assets/SSurfers.mp4" type="video/mp4">
                 <source src="assets/SSurfers.ogg" type="video/ogg">
             </video>
+            <!-- <audio controls src="assets/RoganGoggins"></audio> -->
             <!-- <video controls autoplay="" loop="" muted="" playsinline="" src="SSurfers.mp4" width="100%" height="100%"></video> -->
         </div>
     </div>
