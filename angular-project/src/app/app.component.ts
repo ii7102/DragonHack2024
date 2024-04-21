@@ -54,21 +54,29 @@ export class AppComponent {
   }
 
   selectWord(words: string[]): number {
-    let max = 0, lmax = 0, maxIndex = -1
+    let max = 0, localmax = 0, maxIndex = -1
       for(let i = 0;i<words.length;i++) {
-        lmax = 0;
+        localmax = 0;
         const charSet: Set<string> = new Set();
         for (let ch of words[i])
           if (ch >= 'a' && ch <= 'z' && !charSet.has(ch)) {
-              lmax+= this.charCountArray[ch.charCodeAt(0) - 'a'.charCodeAt(0)]
+              localmax+= this.charCountArray[ch.charCodeAt(0) - 'a'.charCodeAt(0)]
               charSet.add(ch);
           }
-        if(lmax > max) {
-          max = lmax;
+        if(localmax > max) {
+          max = localmax;
           maxIndex = i;
         }
       }
     return maxIndex
+  }
+
+  charAtStringIsEqualTo(regex: string, index: number, equalsTo: string) {
+    return regex.charAt(index) === equalsTo
+  }
+
+  arrayContainsElement(array: string[], element: string) {
+    return array.includes(element)
   }
 
   filter(words: string[], lettersOUT: string[], lettersIN: string[], regex: string): string[] {
@@ -76,62 +84,73 @@ export class AppComponent {
     if(this.questionMarks == 0) return words
     for(const word of words) {
       let questionMarks = this.questionMarks;
-      let letters = lettersIN.length
-      const usedLetters: boolean[] = Array(letters).fill(false)
-      let add = true
-      for(let i = 0; i<5 && add;i++)
-        if(regex.charAt(i) === '?') {
-          let found = false
-          for(let j = 0; j < lettersIN.length && !found; j++)
-              if(!usedLetters[j] && lettersIN.includes(word.charAt(i))) {
+      let lettersLeftForFilling = lettersIN.length
+      const usedLetters: boolean[] = Array(lettersLeftForFilling).fill(false)
+      let addTheWord = true
+      for(let i = 0; i<5 && addTheWord;i++)
+        if(this.charAtStringIsEqualTo(regex,i,"?")) {
+          let foundLetter = false
+          for(let j = 0; j < lettersIN.length && !foundLetter; j++)
+              if(!usedLetters[j] && this.arrayContainsElement(lettersIN,word.charAt(i))) {
                 usedLetters[j] = true
-                letters--
-                found = true
+                lettersLeftForFilling--
+                foundLetter = true
               }
-          if(!found)
-              if(lettersOUT.includes(word.charAt(i)) || letters === questionMarks) add = false
+          if(!foundLetter)
+              if(lettersOUT.includes(word.charAt(i)) || lettersLeftForFilling === questionMarks) addTheWord = false
           questionMarks--
         }
-      if(add && letters == 0) result.push(word)
+      if(addTheWord && lettersLeftForFilling == 0) result.push(word)
     }
     return result
+  }
+
+  firstCharChangedOfString(string: string, changedTo: string) {
+    return changedTo + string.slice(1);
+  }
+  
+  secondCharChangedOfString(string: string, changedTo: string) {
+    return string.slice(0, 1) + changedTo + string.slice(2);
   }
   
   async fetchFiveLetterWordsWithoutLetters(lettersOUT: string[], lettersIN: string[], regex: string): Promise<string[]> {
     try {
       const words: string[] = []
       for(let i = 0; i < 5; i++)
-          if(regex.charAt(i) === '?') this.questionMarks++
+          if(this.charAtStringIsEqualTo(regex,i,"?")) this.questionMarks++
       if(this.questionMarks == 4) {
-        let q = 0
-          if(regex.charAt(0) != '?') q = 1
+        let firstQuestionMarkIndex = 0
+          if(!this.charAtStringIsEqualTo(regex,0,"?")) firstQuestionMarkIndex = 1
             for (let charCode = 'a'.charCodeAt(0); charCode <= 'z'.charCodeAt(0); charCode++)
-              if(!lettersOUT.includes(String.fromCharCode(charCode)) ) {
-                if(q === 0)
-                  regex = String.fromCharCode(charCode) + regex.slice(1);
+              if(!this.arrayContainsElement(lettersOUT,String.fromCharCode(charCode)) ) {
+                if(firstQuestionMarkIndex === 0)
+                  regex = this.firstCharChangedOfString(regex,String.fromCharCode(charCode))
                 else
-                  regex = regex.slice(0, 1) + String.fromCharCode(charCode) + regex.slice(2);
+                  regex = this.secondCharChangedOfString(regex,String.fromCharCode(charCode))
                 const response = await axios.get(`https://api.datamuse.com/words?sp=${regex}&max=1000`);
-                words.push(...this.filter(response.data.map((wordInfo: any) => wordInfo.word),lettersOUT,lettersIN,regex))
+                const responseToArray = response.data.map((wordInfo: any) => wordInfo.word)
+                words.push(...this.filter(responseToArray,lettersOUT,lettersIN,regex))
               }
-        if(q === 0)
-          regex = '?' + regex.slice(1);
+        if(firstQuestionMarkIndex === 0)
+          regex = this.firstCharChangedOfString(regex,"?")
         else
-          regex = regex.slice(0, 1) + '?' + regex.slice(2);
+          regex = this.secondCharChangedOfString(regex,"?")
       } else if(this.questionMarks == 5) {
         for (let charCode = 'a'.charCodeAt(0); charCode <= 'z'.charCodeAt(0); charCode++)
           if(!lettersOUT.includes(String.fromCharCode(charCode)) ) {
-            regex = String.fromCharCode(charCode) + regex.slice(1);
+            regex = this.firstCharChangedOfString(regex,String.fromCharCode(charCode))
             for (let charCode2 = 'a'.charCodeAt(0); charCode2 <= 'z'.charCodeAt(0); charCode2++)
-              if(!lettersOUT.includes(String.fromCharCode(charCode2)) ) {
-                regex = regex.slice(0, 1) + String.fromCharCode(charCode2) + regex.slice(2);
+              if(!this.arrayContainsElement(lettersOUT,String.fromCharCode(charCode)) ) {
+                regex = this.secondCharChangedOfString(regex,String.fromCharCode(charCode2))
                 const response = await axios.get(`https://api.datamuse.com/words?sp=${regex}&max=1000`);
-                words.push(...this.filter(response.data.map((wordInfo: any) => wordInfo.word),lettersOUT,lettersIN,regex))
+                const responseToArray = response.data.map((wordInfo: any) => wordInfo.word)
+                words.push(...this.filter(responseToArray,lettersOUT,lettersIN,regex))
               }
           }
       } else {
         const response = await axios.get(`https://api.datamuse.com/words?sp=${regex}&max=1000`);
-        words.push(...this.filter(response.data.map((wordInfo: any) => wordInfo.word),lettersOUT,lettersIN,regex))
+        const responseToArray = response.data.map((wordInfo: any) => wordInfo.word)
+        words.push(...this.filter(responseToArray,lettersOUT,lettersIN,regex))
       }
       return words;
     }
