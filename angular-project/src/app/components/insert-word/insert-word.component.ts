@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChildren, QueryList } from '@angular/core';
 
 @Component({
   selector: 'app-insert-word',
@@ -12,12 +12,20 @@ export class InsertWordComponent {
   buttonLetters: string[][] = [['', '', '', '', '']]; // Initialize the button letters array with empty strings
   elements: number=1
 
+  @ViewChildren('letterButton') letterButtons!: QueryList<any>; // Add ! to indicate that it will be initialized later
+  grey: string[]=[];
+  yellow: string[]=[]
+  green:string[]=['?', '?', '?', '?', '?']
+  boolYellow: boolean[]=[]
+
+  constructor() { } // Added constructor
+
   addGrid() {
     // Add a new element to the grids array
     if(this.elements<4){
-    this.grids.push(1);
-    this.elements+=1
-  }
+      this.grids.push(1);
+      this.elements+=1
+    }
   
     // Add a new array of colors to the buttonColors array with grey color
     this.buttonColors.push(['#D3D3D3', '#D3D3D3', '#D3D3D3', '#D3D3D3', '#D3D3D3']);
@@ -54,7 +62,6 @@ export class InsertWordComponent {
     }
   }
   
-  
   validateInput(event: any) {
     const input = event.target.value;
     this.word = input.replace(/[^a-zA-Z]/g, '').toUpperCase().slice(0, 5);
@@ -64,5 +71,39 @@ export class InsertWordComponent {
     return /^[a-zA-Z]+$/.test(this.word);
   }
 
+  onClick() {
+    this.grids.forEach((_, gridIndex) => {
+      const buttonsInGrid = this.letterButtons.toArray().slice(gridIndex * 5, (gridIndex + 1) * 5);
+      this.boolYellow.fill(false);
+      buttonsInGrid.forEach((button, buttonIndex) => { // Here you get the index of the button in the grid
+        const buttonText = button.nativeElement.textContent.trim();
+        const buttonColor = button.nativeElement.style.background;
+        // console.log(buttonColor);
+        // console.log('Button index in grid:', buttonIndex); // This line logs the index of the button in the current grid
+        if (buttonColor === 'rgb(211, 211, 211)' && !this.yellow.includes(buttonText) && !this.grey.includes(buttonText)) {
+          this.grey.push(buttonText);
+        } else if (buttonColor ===  'rgb(105, 174, 69)' && !this.yellow.includes(buttonText) && !this.green.includes(buttonText)) {
+          this.green[buttonIndex]=buttonText;
+        } else if (buttonColor === 'rgb(229, 219, 53)') {
+          if (this.yellow.includes(buttonText)) {
+            const index = this.yellow.indexOf(buttonText);
+            if (!this.boolYellow[index]) {
+              this.boolYellow[index] = true;
+            } else if (this.boolYellow[index]) {
+              this.yellow.push(buttonText);
+              this.boolYellow.push(true)
+            }
+          } else {
+            this.yellow.push(buttonText);
+          }
+        }
+      });
+    });
+  
+    console.log('Grey:', this.grey);
+    console.log('Green:', this.green);
+    console.log('Yellow:', this.yellow);
+  }
+  
   
 }

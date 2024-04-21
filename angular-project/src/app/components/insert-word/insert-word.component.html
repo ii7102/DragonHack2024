@@ -28,8 +28,10 @@
     class="letter"
     [style.background]="buttonColors[gridIndex][buttonIndex]"
     (click)="changeColor(gridIndex, buttonIndex)"
+    #letterButton
   >
     <span>{{ buttonLetters[gridIndex][buttonIndex] }}</span>
   </button>
   <button class="plus" (click)="addGrid()">+</button>
 </div>
+<button class="click" (click)="onClick()">Click</button>
