@@ -39,7 +39,7 @@ To contribute to MyWebApp, follow these steps:
 
 ## Testing
 To run tests for Wordle ProMax, use the following command:
- # 'ng serve'
+ (`ng serve`)
 
 ## License
 Wordle ProMax is not released under any license.
