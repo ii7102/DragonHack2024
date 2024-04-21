@@ -1,11 +1,25 @@
 <nav class="navbar">
   <div class="left-side">
     <!-- <img src="" class="logo" /> -->
-    <div class="image"></div>
+    <div><img class="image" src="../../../assets/logo.jpg" /></div>
     <div class="logo">WORDLE ASSISTANT</div>
   </div>
   <div class="right-side">
-    <button class="button2">Helper</button>
-    <button class="button2">1 vs 1</button>
+    <button
+      class="button2"
+      (click)="assistWordle()"
+      routerLink="/assist"
+      routerLinkActive="active"
+    >
+      Helper
+    </button>
+    <button
+      class="button2"
+      (click)="playWordle()"
+      routerLink="/play"
+      routerLinkActive="active"
+    >
+      1 vs 1
+    </button>
   </div>
 </nav>
