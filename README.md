@@ -1,7 +1,7 @@
-# Wordle ProMax
+# Wordle Assistant
 
 ## Description
-Wordle ProMax is an improved version of the game Wordle. It allows users to play 1v1 games of Wordle and it has a Wordle helper that returns the best possible word for the user to choose based on their previous inputs and results.
+Wordle Assistant is an improved version of the game Wordle. It allows users to play 1v1 games of Wordle and it has a Wordle helper that returns the best possible word for the user to choose based on their previous inputs and results.
 
 ## Table of Contents
 1. [Installation](#installation)
@@ -13,7 +13,7 @@ Wordle ProMax is an improved version of the game Wordle. It allows users to play
 7. [Acknowledgements](#acknowledgements)
 
 ## Installation
-To install Wordle ProMax, follow these steps:
+To install Wordle Assistant, follow these steps:
 
 1. Clone the repository.
 2. Install dependencies with `npm install`.
@@ -38,11 +38,11 @@ To contribute to MyWebApp, follow these steps:
 5. Create a new Pull Request.
 
 ## Testing
-To run tests for Wordle ProMax, use the following command:
+To run tests for Wordle Assistant, use the following command:
  (`ng serve`)
 
 ## License
-Wordle ProMax is not released under any license.
+Wordle Assistant is not released under any license.
 
 ## Contact
 For questions or support, contact us at ii7102@student.uni-lj.si.
